@@ -1,0 +1,9 @@
+{% if latest_pdf_list %}
+	<ul>
+		{% for pdf in latest_pdf_list %}
+		<li><a href="{% url 'detail' pdf.id %}">{{ pdf.pdf_name }}</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No hay formulario disponible</p>
+{% endif %}

@@ -1,0 +1,23 @@
+<h1>{{ genpdf.pdf_name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'rellenar' genpdf.id %}" method="post">
+{% csrf_token %}
+{% for position in genpdf.pdfposition_set.all %}
+    <label for="{{position}} label">{{ position.position_text }}:</label>
+    <input type="text" name="{{position}}">
+    <br>
+{% endfor %}
+<br>
+<input type="submit" name="generar" onclick="back()" />
+</form>
+
+<script type="text/javascript">
+	function back(){
+		setTimeout(function (){
+			window.location = "/polls";
+		}, 2500);
+	}
+
+</script>
