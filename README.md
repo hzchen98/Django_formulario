@@ -1,5 +1,5 @@
 # Django_formulario
-Creación de web para rellenado de formularios
+Web de publicación de formularios para rellenar dichos documentos
 
 # Getting Started
 
