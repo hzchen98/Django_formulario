@@ -20,6 +20,7 @@ class GenPdf(models.Model):
         super(GenPdf, self).save(force_insert, force_update, using, update_fields)
         directorio = self.pdf_name.replace(".pdf", "")
         directorio = directorio.replace(" ", "_")
+        directorio = directorio.lower();
         if not os.path.exists("polls/download_files/" + directorio):
             os.mkdir("polls/download_files/" + directorio)
 
