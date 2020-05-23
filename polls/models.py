@@ -1,4 +1,5 @@
 from PyPDF2 import PdfFileReader
+from PyPDF2.utils import PdfReadError
 from django.core.exceptions import ValidationError
 from django.db import models
 import os
@@ -24,7 +25,6 @@ class GenPdf(models.Model):
         if not os.path.exists("polls/download_files/" + directorio):
             os.mkdir("polls/download_files/" + directorio)
 
-
 class PdfPosition(models.Model):
     pdf = models.ForeignKey(GenPdf, on_delete=models.CASCADE)
     position_text = models.CharField(max_length=100)
@@ -39,8 +39,12 @@ class PdfPosition(models.Model):
         return self.position_text
 
     def clean(self):
-        read_pdf = PdfFileReader(self.pdf.origin_pdf.open("rb"))
-        if self.pdf_page < 1 or self.pdf_page > read_pdf.getNumPages():
-            raise ValidationError("Número de página incorrecto!")
-        if self.position_x < 0 or self.position_y < 0:
-            raise ValidationError("Las posiciones no pueden ser negativos!")
+        try:
+            read_pdf = PdfFileReader(self.pdf.origin_pdf.open("rb"))
+            if self.pdf_page < 1 or self.pdf_page > read_pdf.getNumPages():
+                raise ValidationError("Número de página incorrecto!")
+            if self.position_x < 0 or self.position_y < 0:
+                raise ValidationError("Las posiciones no pueden ser negativos!")
+        except PdfReadError as e:
+            raise ValidationError("EL fichero debe ser de extensión .pdf!")
+
