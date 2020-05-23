@@ -6,7 +6,7 @@ Web de publicación de formularios para rellenar dichos documentos
 Used IDE : PyCharm
 
 Requirements: 
-   Python 3.+ -> libraries: Django 3.+ , PyPDF2, reportlab
+   Python 3.+ -> libraries: Django 3.+ , PyPDF2, reportlab, freeze, WhiteNoise
                
 
 Checkout the master branch and run manage.py with the follow command:
