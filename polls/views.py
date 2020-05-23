@@ -42,10 +42,10 @@ def create_pdf(request, genpdf_id):
         text = request.POST[str(item)]
         position_list.append((page, pos_x, pos_y, text))
     origin_file = str(pdf.origin_pdf)
-    file_save_dir = "polls/download_files/" + origin_file.replace(".pdf", "").replace(" ", "_").replace("polls/upload/", "")
+    file_save_dir = "polls/download_files/" + pdf.pdf_name.replace(" ", "_")
     write_pdf = Crear_pdf(origin_file, position_list, file_save_dir)
     with open(write_pdf.file_save, 'rb') as client_pdf:
         response = HttpResponse(client_pdf.read(), content_type='text/download')
-        response['Content-Disposition'] = 'attachment;filename=formulario.pdf'
+        response['Content-Disposition'] = 'attachment;filename=' + pdf.pdf_name.replace(" ", "_") + "_" + write_pdf.generated_name
         response.set_cookie("descarga", "true")
         return response

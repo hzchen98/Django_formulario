@@ -11,6 +11,7 @@ class Crear_pdf():
     def __init__(self, pdf_file, elementos, save_file_dir):
         self.pdf_file = pdf_file
         self.elementos = elementos  # ((pagina, pos_x, pos_y, texto), ...)
+        self.generated_name = ""
         self.output = PdfFileWriter()
         self.write_pages(self.pdf_file, self.elementos)
         if save_file_dir[-1] != "/" or save_file_dir[-1] != "\\":
@@ -41,7 +42,8 @@ class Crear_pdf():
             self.output.addPage(pdf_page)
 
     def create_pdf(self, destino):
-        self.file_save = destino + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".pdf"
+        self.generated_name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".pdf"
+        self.file_save = destino + self.generated_name
         outputStream = open(self.file_save, "wb")
         self.output.write(outputStream)
         outputStream.close()
